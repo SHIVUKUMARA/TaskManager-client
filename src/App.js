@@ -11,7 +11,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Edittask from "./Components/Edittask";
 import Taskform from "./Components/Taskform";
-import { LoginProvider } from "./Context/LoginContext"; 
+import { LoginProvider } from "./Context/LoginContext";
+import Pnf from "./Components/Pnf";
 const App = () => {
   return (
     <LoginProvider>
@@ -39,6 +40,7 @@ const App = () => {
                 </PrivateRoute>
               }
             />
+            <Route path="/*" element={<Pnf />} />
           </Routes>
         </div>
       </Router>
