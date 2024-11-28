@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify"; // For showing notifications
-import { createTask, updateTask } from "../services/api"; // API calls for create and update
-import { useNavigate } from "react-router-dom"; // For navigation
+import { toast } from "react-toastify";
+import { createTask, updateTask } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 const Taskform = ({ taskData = {}, onSubmit }) => {
-  const [title, setTitle] = useState(taskData.title || ""); // Initialize with existing data for editing
+  const [title, setTitle] = useState(taskData.title || "");
   const [startTime, setStartTime] = useState(taskData.startTime || "");
   const [endTime, setEndTime] = useState(taskData.endTime || "");
   const [priority, setPriority] = useState(taskData.priority || 1);
   const [status, setStatus] = useState(taskData.status || "pending");
 
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (taskData._id) {
-      // If taskData has an id, it's an existing task being edited
       setTitle(taskData.title);
       setStartTime(taskData.startTime);
       setEndTime(taskData.endTime);
@@ -23,7 +22,6 @@ const Taskform = ({ taskData = {}, onSubmit }) => {
     }
   }, [taskData]);
 
-  // Handle task form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -37,16 +35,13 @@ const Taskform = ({ taskData = {}, onSubmit }) => {
 
     try {
       if (taskData._id) {
-        // If task has an _id, it's an update request
         await updateTask(taskData._id, task);
         toast.success("Task updated successfully!");
       } else {
-        // Otherwise, it's a create request
         await createTask(task);
         toast.success("Task created successfully!");
       }
 
-      // After successful submission, navigate to the task list (or home page)
       navigate("/");
     } catch (error) {
       toast.error("An error occurred while saving the task.");

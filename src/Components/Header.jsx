@@ -1,16 +1,14 @@
-// src/Components/Header.js
-
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { LoginContext } from "../Context/LoginContext"; // Import context
+import { LoginContext } from "../Context/LoginContext";
 
 const Header = () => {
-  const { isLoggedIn, logout } = useContext(LoginContext); // Use login state and logout from context
+  const { isLoggedIn, logout } = useContext(LoginContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout(); // Call logout function from context
-    navigate("/login"); // Redirect to login page after logout
+    logout(); 
+    navigate("/login"); 
   };
 
   return (

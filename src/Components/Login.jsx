@@ -1,24 +1,22 @@
-// src/Components/Login.js
-
 import React, { useState, useContext } from "react";
 import { login } from "../services/api";
 import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
-import { LoginContext } from "../Context/LoginContext"; // Import context
+import { LoginContext } from "../Context/LoginContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { login: loginContext } = useContext(LoginContext); // Access login function from context
+  const { login: loginContext } = useContext(LoginContext); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await login(formData);
-      localStorage.setItem("token", data.token); // Save token to localStorage
-      loginContext(); // Set user as logged in in the context
+      localStorage.setItem("token", data.token); 
+      loginContext(); 
       toast.success("Logged in successfully!");
-      navigate("/dashboard"); // Redirect to dashboard
+      navigate("/dashboard"); 
     } catch (err) {
       toast.error("Login failed!");
     }

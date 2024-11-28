@@ -13,12 +13,11 @@ const Dashboard = () => {
     avgCompletionTime: 0,
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate(); // For redirecting to edit task page
+  const navigate = useNavigate();
 
-  // Fetch tasks and calculate stats
   const getTasks = async () => {
     try {
-      const { data } = await fetchTasks(); // Fetch tasks from API
+      const { data } = await fetchTasks();
       if (Array.isArray(data)) {
         setTasks(data);
 
@@ -28,18 +27,17 @@ const Dashboard = () => {
         );
         const pendingTasks = data.filter((task) => task.status === "pending");
 
-        // Calculate the average completion time in hours for completed tasks
         const avgCompletionTime =
           completedTasks.length > 0
             ? completedTasks
                 .map((task) => {
                   const start = new Date(task.startTime);
                   const end = new Date(task.endTime);
-                  return (end - start) / 1000 / 3600; // Time difference in hours
+                  return (end - start) / 1000 / 3600;
                 })
                 .reduce((total, time) => total + time, 0) /
               completedTasks.length
-            : 0; // Avoid division by zero if no completed tasks
+            : 0;
 
         setStats({
           totalTasks,
@@ -51,7 +49,7 @@ const Dashboard = () => {
             ? (pendingTasks.length / totalTasks) * 100
             : 0
           ).toFixed(2),
-          avgCompletionTime: avgCompletionTime // Round to 2 decimal places
+          avgCompletionTime: avgCompletionTime,
         });
       } else {
         toast.error("Failed to load tasks!");
@@ -61,7 +59,6 @@ const Dashboard = () => {
     }
   };
 
-  // Handle task edit
   const editTask = (taskId) => {
     if (taskId && typeof taskId === "object") {
       taskId = taskId._id;
@@ -69,39 +66,35 @@ const Dashboard = () => {
     navigate(`/edit-task/${taskId}`);
   };
 
-  // Handle task deletion
   const handleDeleteTask = async (taskId) => {
     try {
       await deleteTask(taskId);
       toast.success("Task deleted successfully!");
-      getTasks(); // Refresh tasks after deletion
+      getTasks();
     } catch (error) {
       toast.error("Failed to delete task!");
     }
   };
 
-  // Check login status on component mount
   useEffect(() => {
     const checkLoginStatus = () => {
-      const token = localStorage.getItem("token"); // Get token from localStorage
-      setIsLoggedIn(!!token); // Update login status based on token
+      const token = localStorage.getItem("token");
+      setIsLoggedIn(!!token);
     };
 
-    checkLoginStatus(); // Check login status when component mounts
+    checkLoginStatus();
     if (isLoggedIn) {
-      getTasks(); // Fetch tasks if logged in
+      getTasks();
     }
-  }, [isLoggedIn]); // Dependency on isLoggedIn to trigger effect when it changes
+  }, [isLoggedIn]);
 
   return (
     <div className="container mt-5">
-      {/* Dashboard Heading */}
       <div className="text-center mb-4">
         <h1 className="display-4">Task Dashboard</h1>
         <p className="lead">Manage your tasks efficiently</p>
       </div>
 
-      {/* Statistics Section */}
       <div className="row mb-4">
         <div className="col-md-3">
           <div className="card shadow-lg p-3 mb-4 rounded">
@@ -137,13 +130,12 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Task List Section */}
       <div className="mb-4">
         <h4 className="mb-3">Tasks</h4>
         <Tasklist
           tasks={tasks}
-          editTask={editTask} // Pass edit function
-          deleteTask={handleDeleteTask} // Pass delete function
+          editTask={editTask}
+          deleteTask={handleDeleteTask}
         />
       </div>
     </div>

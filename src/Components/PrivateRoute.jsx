@@ -1,17 +1,15 @@
-// src/Components/PrivateRoute.js
-
 import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { LoginContext } from "../Context/LoginContext"; // Import context
+import { LoginContext } from "../Context/LoginContext";
 
 const PrivateRoute = ({ children }) => {
-  const { isLoggedIn } = useContext(LoginContext); // Get login state from context
+  const { isLoggedIn } = useContext(LoginContext);
 
   if (!isLoggedIn) {
-    return <Navigate to="/login" />; // Redirect to login if not logged in
+    return <Navigate to="/login" />;
   }
 
-  return children; // If logged in, render children
+  return children;
 };
 
 export default PrivateRoute;

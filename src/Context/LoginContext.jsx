@@ -1,12 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
 
-// Create a context for login status
 export const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Check login status on component mount
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
@@ -18,7 +16,7 @@ export const LoginProvider = ({ children }) => {
 
   const logout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("token"); // Remove token on logout
+    localStorage.removeItem("token");
   };
 
   return (

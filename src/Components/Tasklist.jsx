@@ -1,7 +1,6 @@
 import React from "react";
 
 const Tasklist = ({ tasks = [], editTask, deleteTask }) => {
-  // Check if tasks is an array
   if (!Array.isArray(tasks)) {
     return <p>Error: tasks data is not an array.</p>;
   }
@@ -45,13 +44,13 @@ const Tasklist = ({ tasks = [], editTask, deleteTask }) => {
                 <td>
                   <button
                     className="btn btn-primary me-2"
-                    onClick={() => editTask(task)} // Pass whole task object
+                    onClick={() => editTask(task)} 
                   >
                     Edit
                   </button>
                   <button
                     className="btn btn-danger"
-                    onClick={() => deleteTask(task._id)} // Pass task ID for deletion
+                    onClick={() => deleteTask(task._id)} 
                   >
                     Delete
                   </button>

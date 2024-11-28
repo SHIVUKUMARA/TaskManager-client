@@ -11,8 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Edittask from "./Components/Edittask";
 import Taskform from "./Components/Taskform";
-import { LoginProvider } from "./Context/LoginContext"; // Import LoginProvider
-
+import { LoginProvider } from "./Context/LoginContext"; 
 const App = () => {
   return (
     <LoginProvider>
