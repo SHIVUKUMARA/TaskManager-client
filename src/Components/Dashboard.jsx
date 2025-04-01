@@ -49,7 +49,7 @@ const Dashboard = () => {
             ? (pendingTasks.length / totalTasks) * 100
             : 0
           ).toFixed(2),
-          avgCompletionTime: avgCompletionTime,
+          avgCompletionTime: avgCompletionTime.toFixed(2),
         });
       } else {
         toast.error("Failed to load tasks!");
@@ -96,47 +96,32 @@ const Dashboard = () => {
       </div>
 
       <div className="row mb-4">
-        <div className="col-md-3">
-          <div className="card shadow-lg p-3 mb-4 rounded">
-            <div className="card-body text-center">
-              <h5 className="card-title">Total Tasks</h5>
-              <h3>{stats.totalTasks}</h3>
+        {[
+          { title: "Total Tasks", value: stats.totalTasks },
+          { title: "Completed", value: `${stats.completedPercent}%` },
+          { title: "Pending", value: `${stats.pendingPercent}%` },
+          { title: "Avg Time", value: `${stats.avgCompletionTime} hours` },
+        ].map((stat, index) => (
+          <div key={index} className="col-md-3 col-sm-6">
+            <div className="card shadow-lg p-3 mb-4 rounded">
+              <div className="card-body d-flex flex-column text-center">
+                <h5 className="card-title text-truncate">{stat.title}</h5>
+                <h3 className="text-truncate">{stat.value}</h3>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col-md-3">
-          <div className="card shadow-lg p-3 mb-4 rounded">
-            <div className="card-body text-center">
-              <h5 className="card-title">Completed</h5>
-              <h3>{stats.completedPercent}%</h3>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-3">
-          <div className="card shadow-lg p-3 mb-4 rounded">
-            <div className="card-body text-center">
-              <h5 className="card-title">Pending</h5>
-              <h3>{stats.pendingPercent}%</h3>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-3">
-          <div className="card shadow-lg p-3 mb-4 rounded">
-            <div className="card-body text-center">
-              <h5 className="card-title">Completion Time</h5>
-              <h3>{stats.avgCompletionTime} hours(avg)</h3>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
 
       <div className="mb-4">
         <h4 className="mb-3">Tasks</h4>
-        <Tasklist
-          tasks={tasks}
-          editTask={editTask}
-          deleteTask={handleDeleteTask}
-        />
+        <div className="table-responsive overflow-auto" style={{ whiteSpace: "nowrap" }}>
+          <Tasklist
+            tasks={tasks}
+            editTask={editTask}
+            deleteTask={handleDeleteTask}
+          />
+        </div>
       </div>
     </div>
   );

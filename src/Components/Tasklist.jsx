@@ -5,6 +5,24 @@ const Tasklist = ({ tasks = [], editTask, deleteTask }) => {
     return <p>Error: tasks data is not an array.</p>;
   }
 
+  // Function to convert priority number to text
+  const getPriorityLabel = (priority) => {
+    switch (priority) {
+      case 1:
+        return "Low";
+      case 2:
+        return "Medium";
+      case 3:
+        return "High";
+      default:
+        return "Unknown";
+    }
+  };
+
+  const capitalizeStatus = (status) => {
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  };
+
   return (
     <div className="row">
       <div className="col-md-12">
@@ -27,9 +45,23 @@ const Tasklist = ({ tasks = [], editTask, deleteTask }) => {
                 {tasks.map((task) => (
                   <tr key={task._id} className="text-center">
                     <td>{task.title}</td>
-                    <td>{task.priority}</td>
-                    <td>{new Date(task.startTime).toLocaleString()}</td>
-                    <td>{new Date(task.endTime).toLocaleString()}</td>
+                    <td>{getPriorityLabel(task.priority)}</td>
+                    <td>
+                      {new Date(task.startTime).toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}{" | "}
+                      {new Date(task.startTime).toLocaleTimeString()}
+                    </td>
+                    <td>
+                      {new Date(task.endTime).toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}{" | "}
+                      {new Date(task.endTime).toLocaleTimeString()}
+                    </td>
                     <td>
                       <span
                         className={`badge p-2 fw-bold ${
@@ -40,7 +72,7 @@ const Tasklist = ({ tasks = [], editTask, deleteTask }) => {
                             : "bg-secondary"
                         }`}
                       >
-                        {task.status}
+                        {capitalizeStatus(task.status)}
                       </span>
                     </td>
                     <td>

@@ -18,7 +18,7 @@ const Login = () => {
       toast.success("Logged in successfully!");
       navigate("/dashboard"); 
     } catch (err) {
-      toast.error("Login failed!");
+      toast.error("Invalid Email or Password!");
     }
   };
 
